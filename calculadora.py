@@ -3,7 +3,7 @@ from PySimpleGUI import PySimpleGUI as sg
 sg.theme('Topanga')
 
 layout = [
-    [sg.Input('0', size=(int(15), 1), font=(20), key='-OUT-'),sg.Button('<-', font=(20)), sg.Button('C', font=(20))],
+    [sg.Input('0', size=(int(15), 1), font=(20), key='-OUT-'),sg.Button('<<', font=(20)), sg.Button('C', font=(20))],
     [sg.Button('7', font=(20)), sg.Button('8', font=(20)), sg.Button('9', font=(20)), sg.Button('+', font=(20))],
     [sg.Button('4', font=(20)), sg.Button('5', font=(20)), sg.Button('6', font=(20)), sg.Button('-', font=(20))],
     [sg.Button('1', font=(20)), sg.Button('2', font=(20)), sg.Button('3', font=(20)), sg.Button('*', font=(20))],
@@ -89,7 +89,7 @@ class App():
             if eventos in ('C'):
                 janela.resultado = 0
                 janela.window['-OUT-'].update(value=janela.resultado)
-            if eventos in ('<-'):
+            if eventos in ('<<'):
                 if (janela.valores['-OUT-'] == '0'):
                     janela.window['-OUT-'].update(value='0')
                 elif (janela.valores['-OUT-'][:-1] == ''):
