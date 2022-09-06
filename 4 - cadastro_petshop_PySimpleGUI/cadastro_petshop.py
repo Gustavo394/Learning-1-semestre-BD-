@@ -86,7 +86,10 @@ class Petshop():
                 sg.popup_ok('Usuário ou senha inválidos')
 
         if eventos in ['-VER-']:
-            sg.popup_quick_message(valores['-SENHA-'])
+            if valores['-SENHA-'] != '':
+                sg.popup_quick_message('Senha digitada: '+ valores['-SENHA-'])
+            else:                
+                sg.popup_quick_message('Nenhuma senha foi digitada')
 
         if window == janela_l and eventos == 'Novo':
             janela_l.hide()
