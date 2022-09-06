@@ -52,7 +52,7 @@ class Petshop():
         ]
         return sg.Window('Consultar ou alterar cadastro', layout=c_a_layout, finalize=True)
 
-    janela_l, janela_n, janela_c_a= janela_login(), None, None
+    janela_l, janela_n, janela_c_a = janela_login(), None, None
 
     while True:
         window, eventos, valores = sg.read_all_windows()
