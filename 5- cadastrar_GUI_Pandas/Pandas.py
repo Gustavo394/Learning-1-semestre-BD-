@@ -1,14 +1,23 @@
 import pandas as pd
 
-dataframe = pd.DataFrame()
+nome = input('Digite seu nome')
 
-cadastro_df = pd.read_excel('cadastro.xlsx')
+with pd.ExcelFile('cadastro.xlsx') as cad_reader:
+    cadastro_df = pd.read_excel(cad_reader)
+    print(cadastro_df)
 
-##nome= vendas_df['Nome']
-##print(nome)
+with pd.ExcelWriter("cadastro.xlsx", engine="xlsxwriter") as writer:
+    cadastro_df.to_excel(writer, sheet_name='Nome')
+    cad_write = pd.DataFrame(nome)
+    writer.save()   
 
-##print(vendas_df.loc[3])
 
-cadastro = cadastro_df.loc[cadastro_df['Nome'] == 'Gustavo']
-
-print(cadastro)
+"""
+with open('cadastro.csv', 'a', newline='') as arquivo:
+            writer = csv.writer(arquivo)
+            writer.writerow([valores['-NOME-']] + [valores['-IDADE-']] + [valores['-CPF-']]
+            + [valores['-RUA-']] + [valores['-NUM-']] + [valores['-COMP-']] + [valores['-BAIRRO-']]
+            + [valores['-CEP-']] + [valores['-CDD-']] + [valores['-ESTADO-']] + [valores['-AFILIACAO-']])
+            sg.popup_quick('Usuário cadastrado com sucesso!')
+            arquivo.close()
+"""
