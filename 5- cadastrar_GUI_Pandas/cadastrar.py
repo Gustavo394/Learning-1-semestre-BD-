@@ -14,6 +14,7 @@ def __init__():
         sg.Text('CEP', font=('Arial')), sg.Input('', size=(10), font=('Arial'), key='-CEP-')],
         [sg.Text('Cidade', font=('Arial')), sg.Input('', size=(35), font=('Arial'), key='-CDD-')],
         [sg.Text('Estado', font=('Arial')), sg.Input('', size=(35), font=('Arial'), key='-ESTADO-')],
+        [sg.Text('Filiação', font=('Arial')), sg.Input('', size=(35), font=('Arial'), key='-AFILIACAO-')],
         [sg.Button('Salvar', expand_x=True, font=('Arial'), key='-SALVAR-')]
     ]
     return sg.Window('Registro', layout=layout, margins=(10, 10), finalize=True)
@@ -31,5 +32,6 @@ while True:
             writer = csv.writer(arquivo)
             writer.writerow([valores['-NOME-']] + [valores['-IDADE-']] + [valores['-CPF-']]
             + [valores['-RUA-']] + [valores['-NUM-']] + [valores['-COMP-']] + [valores['-BAIRRO-']]
-            + [valores['-CEP-']] + [valores['-CDD-']] + [valores['-ESTADO-']])
+            + [valores['-CEP-']] + [valores['-CDD-']] + [valores['-ESTADO-']] + [valores['-AFILIACAO-']])
+            sg.popup_quick('Usuário cadastrado com sucesso!')
             arquivo.close()
