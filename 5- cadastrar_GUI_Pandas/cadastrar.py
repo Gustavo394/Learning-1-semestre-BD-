@@ -1,7 +1,6 @@
 import PySimpleGUI as sg
 import pandas as pd
 
-
 def __init__():
 
     layout = [
