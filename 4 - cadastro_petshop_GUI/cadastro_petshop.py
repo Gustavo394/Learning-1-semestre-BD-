@@ -38,7 +38,7 @@ class Petshop():
                     usuario.append(linha[0])
                     senha.append(linha[1])
                 if linha == '':
-                    break            
+                    break
         consulta.close()        
 
         c_a_layout = [
