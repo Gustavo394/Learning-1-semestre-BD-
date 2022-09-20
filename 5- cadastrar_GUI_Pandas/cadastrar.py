@@ -1,6 +1,6 @@
-from fileinput import close
-from multiprocessing.resource_sharer import stop
-from operator import index, indexOf
+from ast import Index
+from operator import indexOf
+from sqlite3 import converters
 import PySimpleGUI as sg
 import pandas as pd
 
@@ -10,6 +10,14 @@ def __init__():
         [sg.Button('Logar', expand_x=True, font=('Arial', 20), key='-LOGAR-')],
     ]
     return sg.Window('Logar', layout=layout, margins=(10, 10), finalize=True)
+
+def fun_logado():
+    layout_logado = [
+        [sg.Text(f'Usuario: {nome}')],
+        [sg.Button('Cadastrar', expand_x=True, font=('Arial', 20), key='-CAD-'),
+        sg.Button('Sair', expand_x=True, font=('Arial', 20), key='-SAIR-')],
+    ]
+    return sg.Window('Bem Vindo', layout=layout_logado, margins=(10, 10), finalize=True)
 
 def fun_cadastro():
     layout_cadastro = [
@@ -25,11 +33,12 @@ def fun_cadastro():
         [sg.Text('Cidade', font=('Arial', 20)), sg.Input('', size=(35), font=('Arial', 20), key='-CDD-')],
         [sg.Text('Estado', font=('Arial', 20)), sg.Input('', size=(35), font=('Arial', 20), key='-ESTADO-')],
         [sg.Text('Filiação', font=('Arial', 20)), sg.Input('', size=(35), font=('Arial', 20), key='-FILIACAO-')],
-        [sg.Button('Salvar', expand_x=True, font=('Arial', 20), key='-SALVAR-')],
+        [sg.Button('Salvar', expand_x=True, font=('Arial', 20), key='-SALVAR-'),
+        sg.Button('Cancelar', expand_x=True, font=('Arial', 20), key='-CANCELAR-'),],
     ]
     return sg.Window('Registro', layout=layout_cadastro, margins=(10, 10), finalize=True)
 
-inicio, cadastro = __init__(), None
+inicio, logado, cadastro = __init__(), None, None
 
 while True:
     excel_header = ['Nome', 'Idade', 'CPF', 'Rua', 'Numero', 'Complemento', 'Bairro', 'CEP', 'Cidade', 'Estado', 'Filiação']
@@ -42,16 +51,36 @@ while True:
     if window == inicio and eventos in ['-LOGAR-']:
         if valores['-LOGCPF-'] == '':
             sg.popup_quick('CPF não informado')
-        elif valores['-LOGCPF-'] in str(cadastro_df['CPF']):
-            window.close()
-            sg.popup_ok('Bem vindo!')
-            cadastro = fun_cadastro()
         else:
-            sg.popup_quick('CPF não encontrado')
+            encontrado = False
+            l = 0
+            for cpf in cadastro_df['CPF']:
+                if cpf == int(valores['-LOGCPF-']):
+                    encontrado = True
+                    nome = cadastro_df.loc[l].at['Nome']
+                    break
+                l = l + 1
+            if encontrado == True:
+                window.close()
+                sg.popup_ok(f'Boas vindas {nome}!')
+                logado = fun_logado()
+            elif encontrado == False:
+                sg.popup_quick('CPF não encontrado')
+
+    if window == logado and eventos in ['-SAIR-']:
+        logado.close()
+        inicio = __init__()
+
+    if window == logado and eventos in ['-CAD-']:
+        logado.hide()
+        cadastro = fun_cadastro()
+
+    if window == logado and eventos == sg.WINDOW_CLOSED:
+        break
 
     if window == cadastro and eventos == sg.WINDOW_CLOSED:
         cadastro.close()
-        inicio = __init__()
+        logado.un_hide()
     
     if window == cadastro and eventos in ['-SALVAR-']:
         if valores['-NOME-'] and valores['-IDADE-'] and valores['-CPF-'] and valores['-RUA-'] and valores['-NUM-'] and valores['-COMP-'] and valores['-BAIRRO-'] and valores['-CEP-'] and valores['-CDD-'] and valores['-ESTADO-'] and valores['-FILIACAO-'] != '':
@@ -61,11 +90,14 @@ while True:
                 + [valores['-CEP-']] + [valores['-CDD-']] + [valores['-ESTADO-']] + [valores['-FILIACAO-']])
                 
             writer = pd.ExcelWriter('arquivo.xlsx')
-            cadastro_df.to_excel(writer)
+            cadastro_df.to_excel(writer, index=False)
             writer.save()
             cadastro.close()
             cadastro = fun_cadastro()
             sg.popup_quick('Usuário cadastrado com sucesso!')
         else:
             sg.popup('Vazio')
-        
+    
+    if window == cadastro and eventos in ['-CANCELAR-']:
+        cadastro.close()
+        logado.un_hide()
