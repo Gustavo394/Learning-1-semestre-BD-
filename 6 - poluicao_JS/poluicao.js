@@ -1,4 +1,4 @@
-function calcularpoluicao(){
+function cal_poluicao(){
     let poluicao = document.getElementById("pol").value;
     
     if (poluicao >= 55){
