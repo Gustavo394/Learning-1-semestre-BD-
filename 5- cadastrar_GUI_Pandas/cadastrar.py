@@ -88,9 +88,9 @@ while True:
             cadastro_df.loc[l+1] = ([valores['-NOME-']] + [valores['-IDADE-']] + [valores['-CPF-']]
                 + [valores['-RUA-']] + [valores['-NUM-']] + [valores['-COMP-']] + [valores['-BAIRRO-']]
                 + [valores['-CEP-']] + [valores['-CDD-']] + [valores['-ESTADO-']] + [valores['-FILIACAO-']])
-                
+
             writer = pd.ExcelWriter('arquivo.xlsx')
-            cadastro_df.to_excel(writer, index=False)
+            cadastro_df.to_excel(writer)
             writer.save()
             cadastro.close()
             cadastro = fun_cadastro()
