@@ -1,6 +1,6 @@
-//var decimal = poluicao = prompt('Informe o índice de poluição: ')
 function calcularpoluicao(){
     let poluicao = document.getElementById("pol").value;
+    
     if (poluicao >= 55){
         window.alert("Saudações, por motivos de seguração ao meio ambiente, solicitamos que todas as atividades de todas as empresas sejam suspensas imediatamente!")
     }
