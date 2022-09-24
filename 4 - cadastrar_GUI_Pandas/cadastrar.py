@@ -39,7 +39,7 @@ inicio, logado, cadastro = __init__(), None, None
 
 while True:
     excel_header = ['Nome', 'Idade', 'CPF', 'Rua', 'Numero', 'Complemento', 'Bairro', 'CEP', 'Cidade', 'Estado', 'Filiação']
-    cadastro_df = pd.DataFrame(data = pd.read_excel('4 - cadastrar_GUI_Pandas/arquivo.xlsx', engine='openpyxl'), columns=excel_header)
+    cadastro_df = pd.DataFrame(data = pd.read_excel('arquivo.xlsx', engine='openpyxl'), columns=excel_header)
     window, eventos, valores = sg.read_all_windows()
 
     if window == inicio and eventos == sg.WINDOW_CLOSED:
@@ -91,7 +91,7 @@ while True:
                 cadastro_df.loc[l+1] = ([valores['-NOME-']] + [valores['-IDADE-']] + [valores['-CPF-']]
                     + [valores['-RUA-']] + [valores['-NUM-']] + [valores['-COMP-']] + [valores['-BAIRRO-']]
                     + [valores['-CEP-']] + [valores['-CDD-']] + [valores['-ESTADO-']] + [valores['-FILIACAO-']])
-                writer = pd.ExcelWriter('4 - cadastrar_GUI_Pandas/arquivo.xlsx')
+                writer = pd.ExcelWriter('arquivo.xlsx')
                 cadastro_df.to_excel(writer)
                 writer.save()
                 cadastro.close()
