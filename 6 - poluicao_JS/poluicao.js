@@ -10,7 +10,7 @@ function cal_poluicao(){
     else if (poluicao >= 30){
         window.alert("Saudações, por motivos de seguração ao meio ambiente solicitamos que todas as atividades das empresas do grupo 1 sejam suspensas imediatamente!");
     }
-    else if (poluicao >= 27){
+    else if (poluicao >= 28){
         window.alert("Índice de poluição elevado, caso necessário as empresas serão notificadas para suspender as atividades!");
     }
     else{
