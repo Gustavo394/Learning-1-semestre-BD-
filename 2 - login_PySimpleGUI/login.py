@@ -18,7 +18,7 @@ layout = [
 class Login():
     def __init__(janela):
         janela.window = sg.Window('Login', layout=layout, margins=(10,10))
-        with open('usuario.csv', 'r') as arquivo:
+        with open('2 - login_PySimpleGUI/usuario.csv', 'r') as arquivo:
             arquivo_csv = csv.reader(arquivo, delimiter=',')
             for i, linha in enumerate(arquivo_csv):
                 if i == 1:

@@ -14,7 +14,7 @@ class Petshop():
         layout = [
             [sg.Menu(menu_layout)],
             [sg.Text('Boas vindas ao petshop PET-REPET')],
-            [sg.Image('petshop.png', expand_x=True, expand_y=True)],
+            [sg.Image('3 - cadastro_petshop_GUI/petshop.png', expand_x=True, expand_y=True)],
             [sg.Text('Login:', size=(5), font=(20)), sg.Input('', expand_x=True, font=(20), key='-LOGIN-')],
             [sg.Text('Senha:', size=(5), font=(20)), sg.Input('', expand_x=True, font=(20), password_char='*', key='-SENHA-'), sg.Button('Ver', key='-VER-')],
             [sg.Button('Logar', expand_x=True, expand_y=True, font=(20), key='-LOGAR-')]
@@ -31,7 +31,7 @@ class Petshop():
 
     def janela_consultar_alterar():
 
-        with open('usuarios.csv', 'r') as consulta:
+        with open('3 - cadastro_petshop_GUI/usuarios.csv', 'r') as consulta:
             reader = csv.reader(consulta)
             for linha in reader:
                 if linha != '':
@@ -69,7 +69,7 @@ class Petshop():
         if eventos in ['-LOGAR-']:
             entrou = False
             if valores['-LOGIN-'] and valores['-SENHA-'] != '':
-                with open('usuarios.csv', 'r') as validacao:
+                with open('3 - cadastro_petshop_GUI/usuarios.csv', 'r') as validacao:
                     reader = csv.reader(validacao)
                     num = 0
                     for linha in reader:
@@ -95,7 +95,7 @@ class Petshop():
         
         if eventos in ['-CADASTRAR-']:
             if valores['-CAD_USUARIO-'] and valores['-CAD_SENHA-'] != '':
-                with open('usuarios.csv', 'a', newline='') as novo:
+                with open('3 - cadastro_petshop_GUI/usuarios.csv', 'a', newline='') as novo:
                     writer = csv.writer(novo)
                     writer.writerow([valores['-CAD_USUARIO-']] + [valores['-CAD_SENHA-']])
                     janela_n['-CAD_USUARIO-'].update(value='')
@@ -125,7 +125,7 @@ class Petshop():
 
         if eventos in ['-ALTERAR-']:
             if valores['-VISOR-'] != '':
-                with open ('usuarios.csv', 'r') as alterar_r, open ('usuarios_temp.csv', 'w', newline='') as alterar_w:
+                with open ('3 - cadastro_petshop_GUI/usuarios.csv', 'r') as alterar_r, open ('3 - cadastro_petshop_GUI/usuarios_temp.csv', 'w', newline='') as alterar_w:
                     reader = csv.reader(alterar_r)
                     writer = csv.writer(alterar_w)
                     num = 0
@@ -140,8 +140,8 @@ class Petshop():
                             writer.writerow(linha)
                         num = num + 1
                         print(num)
-                os.remove('usuarios.csv')
-                os.rename('usuarios_temp.csv', 'usuarios.csv')                
+                os.remove('3 - cadastro_petshop_GUI/usuarios.csv')
+                os.rename('3 - cadastro_petshop_GUI/usuarios_temp.csv', '3 - cadastro_petshop_GUI/usuarios.csv')                
                 janela_c_a = janela_consultar_alterar()
             else:
                 sg.popup_ok('Selecione um usuário antes de tentar alterar')

@@ -6,7 +6,7 @@ if sys.platform == "win32":
     base = "Win32GUI"
 
 executables = [
-        Executable("cor_roupa.py", base=base)
+        Executable("cadastrar.py", base=base)
 ]
 
 buildOptions = dict(
@@ -17,9 +17,9 @@ buildOptions = dict(
 )
 
 setup(
-    name = "cor_roupa",
+    name = "cadastrar",
     version = "1.0",
-    description = "verificador",
+    description = "cadastrar",
     options = dict(build_exe = buildOptions),
     executables = executables
  )
