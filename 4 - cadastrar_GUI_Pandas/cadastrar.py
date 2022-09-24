@@ -1,6 +1,3 @@
-from ast import Index
-from operator import indexOf
-from sqlite3 import converters
 import PySimpleGUI as sg
 import pandas as pd
 
@@ -50,7 +47,7 @@ while True:
 
     if window == inicio and eventos in ['-LOGAR-']:
         if valores['-LOGCPF-'] == '':
-            sg.popup_quick('CPF não informado')
+            sg.popup_ok('CPF não informado')
         else:
             encontrado = False
             l = 0
@@ -65,7 +62,7 @@ while True:
                 sg.popup_ok(f'Boas vindas {nome}!')
                 logado = fun_logado()
             elif encontrado == False:
-                sg.popup_quick('CPF não encontrado')
+                sg.popup_ok('CPF não encontrado')
 
     if window == logado and eventos in ['-SAIR-']:
         logado.close()
@@ -84,19 +81,26 @@ while True:
     
     if window == cadastro and eventos in ['-SALVAR-']:
         if valores['-NOME-'] and valores['-IDADE-'] and valores['-CPF-'] and valores['-RUA-'] and valores['-NUM-'] and valores['-COMP-'] and valores['-BAIRRO-'] and valores['-CEP-'] and valores['-CDD-'] and valores['-ESTADO-'] and valores['-FILIACAO-'] != '':
-            l = cadastro_df['Nome'].count()
-            cadastro_df.loc[l+1] = ([valores['-NOME-']] + [valores['-IDADE-']] + [valores['-CPF-']]
-                + [valores['-RUA-']] + [valores['-NUM-']] + [valores['-COMP-']] + [valores['-BAIRRO-']]
-                + [valores['-CEP-']] + [valores['-CDD-']] + [valores['-ESTADO-']] + [valores['-FILIACAO-']])
-
-            writer = pd.ExcelWriter('arquivo.xlsx')
-            cadastro_df.to_excel(writer)
-            writer.save()
-            cadastro.close()
-            cadastro = fun_cadastro()
-            sg.popup_quick('Usuário cadastrado com sucesso!')
+            salvar = True
+            for ver in cadastro_df['CPF']:
+                if valores['-CPF-'] == str(ver):
+                    salvar = False
+                    break
+            if salvar == True:
+                l = cadastro_df['Nome'].count()
+                cadastro_df.loc[l+1] = ([valores['-NOME-']] + [valores['-IDADE-']] + [valores['-CPF-']]
+                    + [valores['-RUA-']] + [valores['-NUM-']] + [valores['-COMP-']] + [valores['-BAIRRO-']]
+                    + [valores['-CEP-']] + [valores['-CDD-']] + [valores['-ESTADO-']] + [valores['-FILIACAO-']])
+                writer = pd.ExcelWriter('arquivo.xlsx')
+                cadastro_df.to_excel(writer)
+                writer.save()
+                cadastro.close()
+                cadastro = fun_cadastro()
+                sg.popup_ok('Usuário cadastrado com sucesso!')
+            else:
+                sg.popup_ok('CPF já cadastrado')
         else:
-            sg.popup('Vazio')
+            sg.popup_ok('Todos os campos precisam ser preenchidos')
     
     if window == cadastro and eventos in ['-CANCELAR-']:
         cadastro.close()

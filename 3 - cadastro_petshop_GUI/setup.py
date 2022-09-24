@@ -6,7 +6,7 @@ if sys.platform == "win32":
     base = "Win32GUI"
 
 executables = [
-        Executable("calculadora.py", base=base)
+        Executable("cadastro_petshop.py", base=base)
 ]
 
 buildOptions = dict(
@@ -17,9 +17,9 @@ buildOptions = dict(
 )
 
 setup(
-    name = "calculadora",
+    name = "cadastro_petshop",
     version = "1.0",
-    description = "calculador",
+    description = "cadastro_petshop",
     options = dict(build_exe = buildOptions),
     executables = executables
  )
