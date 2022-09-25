@@ -1,0 +1,28 @@
+html {
+    background-color: midnightblue;
+}
+body {
+    width: 600px;
+    height: 295px;
+    margin: 100px auto;
+    background-color: white;
+    padding: 20px 20px 20px 20px;
+    border: 5px solid black;
+    color: black;
+}
+button[name="verificar"]{
+    width: 150px;
+    height: 40px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    position: absolute;
+}
+input[name="palavra"]{
+    width: 467px;
+}
+textarea[name="frase"]{
+    width: 591px;
+    height: 150px;
+    font-size: large;
+}
