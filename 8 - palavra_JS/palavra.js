@@ -1,17 +1,22 @@
 function fun_palavra(){
     let palavra = document.getElementById("palavra").value;
+    var ver = new RegExp(palavra.toLowerCase(),"g");
     let frase = document.getElementById("frase").value;
-    var igual = frase.match(palavra);
+    frase = frase.toLowerCase();
+    var num = (frase.match(ver)||[]).length;
 
     if (palavra, frase != ""){
-        if (igual == null){
-            window.alert("A frase não contem essa palavra")
+        if (num == 0){
+            window.alert("A palavra " + palavra + " não está presente na frase");
         }
-        else if ( igual != null) {
-            window.alert("A frase contém a palavra " + palavra)
+        else if (num == 1){
+            window.alert("A palavra " + palavra + " apareceu " + num + " vez na frase");
+        }
+        else if (num > 1){
+            window.alert("A palavra " + palavra + " apareceu " + num + " vezes na frase");
         }
     }
     else{
-        window.alert("Preencha todos os campos!")
+        window.alert("Preencha todos os campos!");
     }
 }

@@ -9,7 +9,12 @@ function fun_aumento(){
             window.alert("Olá " + nome + ", por hora, você não tem direito a um aumento")
         }
         else if (num_dep > 3){
-            window.alert("Olá " + nome + ", você tem direito a um aumento de " + ((((h_sal/100)*3)*num_dep)*h_trab))
+            h_s_t = h_sal*h_trab
+            aumento = (((h_sal/100)*3)*num_dep)*h_trab
+            total = h_s_t + aumento
+            window.alert("Olá " + nome + ", você receberia " + h_s_t + " pelas horas trabalhadas\n"
+            + "Você tem direito a um aumento de " + aumento + "\n"
+            + "Portanto receberá " + total)
         }
     }
     else{
