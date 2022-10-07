@@ -11,7 +11,8 @@ def __init__():
 def fun_logado():
     layout_logado = [
         [sg.Text(f'Usuario: {nome}')],
-        [sg.Button('Cadastrar', expand_x=True, font=('Arial', 20), key='-CAD-'),
+        [sg.Button('Consultar', expand_x=True, font=('Arial', 20), key='-CONS-'),
+        sg.Button('Cadastrar', expand_x=True, font=('Arial', 20), key='-CAD-'),
         sg.Button('Sair', expand_x=True, font=('Arial', 20), key='-SAIR-')],
     ]
     return sg.Window('Bem Vindo', layout=layout_logado, margins=(10, 10), finalize=True)
@@ -35,7 +36,14 @@ def fun_cadastro():
     ]
     return sg.Window('Registro', layout=layout_cadastro, margins=(10, 10), finalize=True)
 
-inicio, logado, cadastro = __init__(), None, None
+def fun_consultar():
+    layout_consultar = [
+        [sg.Listbox(consulta, size=(15, 5), font=('Arial', 20))],
+        [sg.Button('Voltar', expand_x=True, font=('Arial', 20), key='-VOLTAR-')]
+    ]
+    return sg.Window('Consultar', layout=layout_consultar, margins=(10, 10), finalize=True)
+
+inicio, logado, cadastro, consultar = __init__(), None, None, None
 
 while True:
     excel_header = ['Nome', 'Idade', 'CPF', 'Rua', 'Numero', 'Complemento', 'Bairro', 'CEP', 'Cidade', 'Estado', 'Filiação']
@@ -64,21 +72,27 @@ while True:
             elif encontrado == False:
                 sg.popup_ok('CPF não encontrado')
 
-    if window == logado and eventos in ['-SAIR-']:
-        logado.close()
-        inicio = __init__()
-
     if window == logado and eventos in ['-CAD-']:
         logado.hide()
         cadastro = fun_cadastro()
 
-    if window == logado and eventos == sg.WINDOW_CLOSED:
-        break
+    if window == logado and eventos in ['-CONS-']:
+        consulta = cadastro_df['Nome']
+        logado.hide()
+        consultar = fun_consultar()
 
-    if window == cadastro and eventos == sg.WINDOW_CLOSED:
+    if window == logado and eventos == sg.WINDOW_CLOSED or eventos in ['-SAIR-']:
+        logado.close()
+        inicio = __init__()
+
+    if window == cadastro and eventos == sg.WINDOW_CLOSED or eventos in ['-CANCELAR-']:
         cadastro.close()
         logado.un_hide()
     
+    if window == consultar and eventos == sg.WINDOW_CLOSED or eventos in ['-VOLTAR-']:
+        consultar.close()
+        logado.un_hide()
+
     if window == cadastro and eventos in ['-SALVAR-']:
         if valores['-NOME-'] and valores['-IDADE-'] and valores['-CPF-'] and valores['-RUA-'] and valores['-NUM-'] and valores['-COMP-'] and valores['-BAIRRO-'] and valores['-CEP-'] and valores['-CDD-'] and valores['-ESTADO-'] and valores['-FILIACAO-'] != '':
             salvar = True
@@ -101,7 +115,3 @@ while True:
                 sg.popup_ok('CPF já cadastrado')
         else:
             sg.popup_ok('Todos os campos precisam ser preenchidos')
-    
-    if window == cadastro and eventos in ['-CANCELAR-']:
-        cadastro.close()
-        logado.un_hide()
