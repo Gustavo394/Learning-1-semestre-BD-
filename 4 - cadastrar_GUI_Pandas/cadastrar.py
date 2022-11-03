@@ -37,7 +37,7 @@ def fun_cadastro():
     return sg.Window('Registro', layout=layout_cadastro, margins=(10, 10), finalize=True)
 
 def fun_consultar():
-    layout_consultar = [        
+    layout_consultar = [
         [sg.Text('Consulta', font=('Arial', 20)),
         sg.Combo(consulta, size=(34, 5), font=('Arial', 20), key='-LIST-')],        
         [sg.Text('Nome', font=('Arial', 20)), sg.Input('', size=(28), font=('Arial', 20), key='-NOME-'),
@@ -154,7 +154,7 @@ while True:
                 window['-ESTADO-'].update(value=cadastro_df.loc[n].at['Estado'])
                 window['-FILIACAO-'].update(value=cadastro_df.loc[n].at['Filiação'])
                 break
-            n = n + 1
+            n += 1
 
     if window == consultar and eventos in ['-ALTERAR-']:
         n = 0
@@ -180,4 +180,22 @@ while True:
                 consultar = fun_consultar()
                 sg.popup_ok('Alterado com sucesso!')
                 break
-            n = n + 1
+            n +=  1
+
+
+        excel_header = ['Nome']
+        df = pd.DataFrame(data = pd.read_excel('exemplo.xlsx', engine='openpyxl'), columns=excel_header)
+        df.at[0, 'Nome'] = input('')
+        writer = pd.ExcelWriter('arquivo.xlsx')
+        df.to_excel(writer)
+        writer.save()
+        print(cadastro_df)
+
+
+        excel_header = ['Nome']
+        df = pd.DataFrame(data = pd.read_excel('exemplo.xlsx', engine='openpyxl'), columns=excel_header)
+        l = df['Nome'].count()
+        df.loc[l+1] = input('')
+        writer = pd.ExcelWriter('arquivo.xlsx')
+        df.to_excel(writer)
+        writer.save()
